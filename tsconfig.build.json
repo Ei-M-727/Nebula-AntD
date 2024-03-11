@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    // https://www.typescriptlang.org/docs/handbook/2/modules.html
+    "module": "ESNext",
+    // https://www.typescriptlang.org/tsconfig#target
+    "target": "ES5",
+    // 获得ts的类型检查和提示
+    "declaration": true,
+    "jsx": "react",
+    "moduleResolution": "node", //声明如何处理模块， 文件查找方式， 枚举值：classic、node会根据module字段来决定默认值（推荐手动设置为node）
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true
+  },
+
+  // 需要编译什么文件
+  "include": ["src"],
+  "exclude": ["src/**/*.test.tsx", "src/**/*.stories.tsx", "src/setupTests.ts"]
+}
