@@ -1,10 +1,4 @@
-import React from "react";
-import {
-  fireEvent,
-  getByPlaceholderText,
-  queryByText,
-  render,
-} from "@testing-library/react";
+import { fireEvent, render } from "@testing-library/react";
 import { Input, InputProps } from "./input";
 
 const defaultProps: InputProps = {
@@ -13,7 +7,7 @@ const defaultProps: InputProps = {
 };
 
 describe("test input component", () => {
-  it("should render the correct default Input ", () => {
+  it("should render the correct default Input", () => {
     const wrapper = render(<Input {...defaultProps}></Input>);
     const testNode = wrapper.getByPlaceholderText(
       "test-input"
@@ -31,6 +25,10 @@ describe("test input component", () => {
     ) as HTMLInputElement;
     expect(testNode.disabled).toBeTruthy();
   });
+  /**
+   * wrapper（在 Enzyme 中）是一个包含了组件树引用的对象，允许你进行各种查询和操作。
+   * wrapper.container是一个 DOM 元素，你可以使用原生 DOM API（如 querySelector）来查询这个容器内的元素。
+   */
   it("should render different input sizes on size property", () => {
     const wrapper = render(<Input placeholder="size" size="lg"></Input>);
     const testContainer = wrapper.container.querySelector(

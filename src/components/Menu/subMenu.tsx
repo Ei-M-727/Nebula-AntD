@@ -3,7 +3,6 @@ import classNames from "classnames";
 import { MenuContext } from "./menu";
 import { MenuItemProps } from "./menuItem";
 import Icon from "../Icon/icon";
-import { CSSTransition } from "react-transition-group";
 import Transition from "../Transition/transition";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -47,6 +46,7 @@ const SubMenu: React.FC<SubMenuProps> = ({
     }, 300);
   };
   const clickEvents =
+    //clickEvents 会被赋值为一个对象，该对象有一个 onClick 属性，其值为 handleClick 函数。
     context.mode === "vertical" ? { onClick: handleClick } : {};
   const hoverEvents =
     context.mode !== "vertical"
@@ -65,6 +65,10 @@ const SubMenu: React.FC<SubMenuProps> = ({
     });
     const childrenComponent = React.Children.map(children, (child, i) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>;
+      /**
+       * 在 React 中，一个元素（例如通过 React.createElement 创建的元素）有一个 type 属性，
+       * 这通常是一个 React 组件。displayName 是这个组件的显示名称，通常用于调试和错误消息。
+       */
       if (childElement.type.displayName === "MenuItem") {
         return React.cloneElement(childElement, {
           index: `${index}-${i}`,

@@ -29,7 +29,8 @@
     "@types/axios": "^0.14.0",
     "axios": "^1.6.7",
     "classnames": "^2.5.1",
-    "react-transition-group": "^4.4.5"
+    "react-transition-group": "^4.4.5",
+    "typescript": "^5.1.6"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
@@ -38,7 +39,7 @@
   "scripts": {
     "start": "react-scripts start",
     "clean": "rimraf ./dist",
-    "lint": "eslint --ext js,ts,tsx src --max-warnings 5",
+    "lint": "eslint --ext js,ts,tsx src ",
     "build": "npm run clean && npm run build-ts && npm run build-css",
     "test": "react-scripts test",
     "test:nowatch": "cross-env CI=true react-scripts test",
@@ -69,7 +70,9 @@
     ]
   },
   "devDependencies": {
+    "@babel/cli": "^7.23.9",
     "@babel/core": "^7.24.0",
+    "@babel/node": "^7.23.9",
     "@babel/plugin-transform-modules-commonjs": "^7.23.3",
     "@babel/preset-env": "^7.24.0",
     "@babel/preset-react": "^7.23.3",
@@ -107,7 +110,6 @@
     "react-scripts": "5.0.1",
     "storybook": "^7.6.17",
     "ts-jest": "^29.1.2",
-    "typescript": "^5.4.2",
     "web-vitals": "^2.1.4",
     "webpack": "^5.90.3"
   },

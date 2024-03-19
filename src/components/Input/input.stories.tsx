@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import type { Meta, StoryObj, StoryFn } from "@storybook/react";
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
 import Input from "./input";
 import Icon from "../Icon/icon";
@@ -34,7 +34,7 @@ DefaultInput.storyName = "默认Input";
 
 export const IconInput: Story = {
   render: function Render(args) {
-    const [value, setValue] = useState<string>("");
+    // const [value, setValue] = useState<string>("");
 
     return (
       <>
@@ -51,9 +51,9 @@ export const IconInput: Story = {
 
 IconInput.storyName = "图标Input";
 
-export const prependOrAppendInput: Story = {
+export const PrependOrAppendInput: Story = {
   render: function Render(args) {
-    const [value, setValue] = useState<string>("");
+    // const [value, setValue] = useState<string>("");
 
     return (
       <>
@@ -69,4 +69,4 @@ export const prependOrAppendInput: Story = {
   },
 };
 
-prependOrAppendInput.storyName = "前后缀Input";
+PrependOrAppendInput.storyName = "前后缀Input";

@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import type { Meta, StoryObj, StoryFn } from "@storybook/react";
-import { action } from "@storybook/addon-actions";
+import { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
 import Transition from "./transition";
 import Button from "../Button/button";
 

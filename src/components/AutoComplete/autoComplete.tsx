@@ -1,4 +1,4 @@
-import React, {
+import {
   FC,
   useState,
   ChangeEvent,
@@ -17,15 +17,38 @@ import useClickOutside from "../../hooks/useClickOutside";
 interface DataSourceObject {
   value: string;
 }
+/**
+ //* 泛型参数 T = {}: 
+ * T 是一个泛型参数，它代表任何类型。
+    = {} 表示如果在使用DataSourceType时没有提供T的类型，那么它的默认值将是一个空的对象类型。
+    //*T & DataSourceObject:
+    * T & DataSourceObject 表示将T与DataSourceObject合并，最终得到一个新类型。
+ */
 export type DataSourceType<T = {}> = T & DataSourceObject;
 
+/**
+ *这里使用了 extends 关键字来继承另一个接口（可能是 InputProps）的属性。
+ 同时，Omit 是一个 TypeScript 的工具类型，用于从原始类型（在这里是 InputProps）中排除某些属性。
+ 在这里，它排除了 onSelect 和 onChange 这两个属性。
+ 这意味着 AutoCompleteProps 会继承 InputProps 的所有属性，除了 onSelect 和 onChange。
+ */
 export interface AutoCompleteProps
   extends Omit<InputProps, "onSelect" | "onChange"> {
+  /**
+   * 这是一个函数，接收一个字符串参数 str，
+   * 并返回一个 DataSourceType[] 数组或一个解析为 DataSourceType[] 的 Promise。
+   * 这个函数的主要目的是基于输入的字符串 str 来获取建议或自动完成的选项。
+   */
   fetchSuggestions: (
     str: string
   ) => DataSourceType[] | Promise<DataSourceType[]>;
   onSelect?: (item: DataSourceType) => void;
   onChange?: (value: string) => void;
+  /**
+   * 这是一个可选的函数，用于自定义如何渲染每个建议或自动完成的选项。
+   * 它接收一个 DataSourceType 类型的参数 item，
+   * 并返回一个 ReactElement，这是 React 组件的一个基本类型。
+   */
   renderOption?: (item: DataSourceType) => ReactElement;
 }
 
@@ -39,13 +62,19 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
     ...restProps
   } = props;
 
-  const [inputValue, setInputValue] = useState(value as string);
-  const [suggestions, setSuggestions] = useState<DataSourceType[]>([]);
-  const [loading, setLoading] = useState(false);
-  //高亮显示
-  const [highlightIndex, setHighlightIndex] = useState(-1);
-  const triggerSearch = useRef(false);
-  const componentRef = useRef<HTMLDivElement>(null);
+  const [inputValue, setInputValue] = useState(value as string); //*当前输入框的值。
+  const [suggestions, setSuggestions] = useState<DataSourceType[]>([]); //*根据输入值获取的建议列表。
+  const [loading, setLoading] = useState(false); //*是否正在加载建议。
+  const [highlightIndex, setHighlightIndex] = useState(-1); //*当前高亮显示的建议的索引。
+  /**
+   * 保持可变的值：虽然 useRef 主要用于访问 DOM 元素，
+   * 但它的 .current 属性也可以用来存储一个可变的值，
+   * 这个值不会在组件重新渲染时改变。
+   * 这使得 useRef 在某些情况下比 useState 更适合，
+   * 比如你想在回调中使用最新的值，但不想触发组件重新渲染。
+   */
+  const triggerSearch = useRef(false); //*一个引用，用于控制是否触发搜索。
+  const componentRef = useRef<HTMLDivElement>(null); //*个引用，指向自动完成组件的DOM元素。
 
   const debouncedValue = useDebounce(inputValue, 500);
   useClickOutside(componentRef, () => {
@@ -69,7 +98,7 @@ export const AutoComplete: FC<AutoCompleteProps> = (props) => {
       setSuggestions([]);
     }
     setHighlightIndex(-1);
-  }, [debouncedValue]);
+  }, [debouncedValue, fetchSuggestions]);
 
   const highlight = (index: number) => {
     if (index < 0) index = 0;

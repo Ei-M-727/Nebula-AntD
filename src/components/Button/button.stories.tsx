@@ -1,6 +1,6 @@
-import type { Meta, StoryObj, StoryFn } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 import { action } from "@storybook/addon-actions";
-import { Button, ButtonProps } from "./button";
+import { Button } from "./button";
 
 const meta: Meta<typeof Button> = {
   title: "Button Component",

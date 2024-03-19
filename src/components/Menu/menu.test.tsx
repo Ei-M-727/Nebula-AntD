@@ -1,4 +1,3 @@
-import React from "react";
 import {
   fireEvent,
   render,
@@ -32,7 +31,7 @@ const NebulaMenu = (props: MenuProps) => {
   );
 };
 const createStyleFile = () => {
-  const cssFile: string = ` 
+  const cssFile: string = `
   .menu-submenu {
       display: none;
     }
@@ -64,6 +63,10 @@ describe("test Menu and MenuItem component", () => {
   it("should render correct Menu and MenuItem based on default props", () => {
     expect(menuElement).toBeInTheDocument();
     // expect(menuElement.getElementsByTagName("li").length).toEqual(3);
+    /**
+     * :scope: 这是一个伪类选择器，它表示当前元素的子元素。
+     * 整个选择器的意思是选择 menuElement 的所有直接子元素 li。
+     */
     expect(menuElement.querySelectorAll(":scope > li").length).toEqual(4);
     expect(activeElement).toHaveClass("menu-item is-active");
     expect(disabledElement).toHaveClass("menu-item is-disabled");
@@ -85,7 +88,7 @@ describe("test Menu and MenuItem component", () => {
     const menuElement = wrapper.getByTestId("test-menu");
     expect(menuElement).toHaveClass("menu-vertical");
   });
-  it("should show dropdown items when hover on subMenu ", async () => {
+  it("should show dropdown items when hover on subMenu", async () => {
     // expect(wrapper.queryByText("drop1")).not.toBeVisible();
     const dropdownElement = wrapper.getByText("dropdown");
     fireEvent.mouseEnter(dropdownElement);

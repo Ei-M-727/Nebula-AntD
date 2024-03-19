@@ -1,9 +1,4 @@
-import React, {
-  FC,
-  ReactElement,
-  InputHTMLAttributes,
-  ChangeEvent,
-} from "react";
+import { FC, ReactElement, InputHTMLAttributes, ChangeEvent } from "react";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import classNames from "classnames";
 import Icon from "../Icon/icon";
@@ -51,14 +46,26 @@ export const Input: FC<InputProps> = (props) => {
     ...restProps
   } = props;
   //根据属性计算不同的className
+  // classNames 是一个函数，可以传入多个参数，返回一个字符串
   const classes = classNames("nebula-input-wrapper", className, {
-    "is-disabled": disabled,
+    "is-disabled": disabled, //"is-disabled": disabled: 如果 disabled 为 true，则 "is-disabled" 这个类名会被包含在生成的字符串中。
     [`input-size-${size}`]: size,
     "input-group": prepend || append,
     "input-group-prepend": prepend,
     "input-group-append": append,
   });
 
+  /**
+   *对于input组件来说，要保证它是受控组件
+  在组件的构造函数中（或者使用函数组件的useState钩子），初始化一个状态变量来存储input的值。
+   */
+
+  /**
+   * 使用受控组件的value和onChange：
+   * 将input元素的value属性绑定到状态变量，
+   * 并使用onChange事件处理器来更新状态。
+   * 这样，每当用户输入时，状态都会更新，从而保持受控状态。
+   */
   const fixControlledValues = (value: any) => {
     if (typeof value === "undefined" || value === null) {
       return "";
@@ -70,6 +77,10 @@ export const Input: FC<InputProps> = (props) => {
     // 在default和value
     // 为了解决input初始值为undefined，这时input为非受控组件，后用onchange来修改输入框的值，此方法为受控组件
     // 组件正在由非受控转换为受控组件
+    /**
+     * 删除 defaultValue 是为了确保组件是一个受控组件。
+     * 在 React 中，一个受控组件是指其值由 React 组件的状态来控制，而不是由 DOM 控制。
+     */
     delete restProps.defaultValue;
     restProps.value = fixControlledValues(props.value);
   }
